@@ -28,13 +28,22 @@ import React, { useState } from 'react';
 import { useRef } from 'react';
 import TodoList from './TodoList';
 import { useReducer } from 'react';
-import { useMemo } from 'react';
+import styled from 'styled-components';
 
 function App() {
   // const [todos, setTodos] = useState([
   //   { id: 1, text: 'demoText1', completed: false },
   //   { id: 2, text: 'demoText2', completed: false },
   // ]);
+
+  const StyledButton=styled.button`
+  background-color: blue;
+  color: white;
+  padding 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  `;
 
 
   const reducer = (state, action) => {
@@ -167,7 +176,7 @@ const handleInputChange = async(event) => {
      
       <div style={{alignItems:'center',display: 'flex',flexDirection: 'row',justifyContent: 'center',marginTop:'35px'
       }}>
-      <button onClick={()=>setFilter('all')}>All</button><button onClick={()=>setFilter('active')}>Active</button><button onClick={()=>setFilter('completee')}>Completed</button>
+      <StyledButton onClick={()=>setFilter('all')}>All</StyledButton>&nbsp;<StyledButton onClick={()=>setFilter('active')}>Active</StyledButton>&nbsp;<StyledButton onClick={()=>setFilter('completee')}>Completed</StyledButton>
       </div>
       </div>
 
