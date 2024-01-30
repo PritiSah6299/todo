@@ -28,6 +28,7 @@ import React, { useState } from 'react';
 import { useRef } from 'react';
 import TodoList from './TodoList';
 import { useReducer } from 'react';
+import { useMemo } from 'react';
 
 function App() {
   // const [todos, setTodos] = useState([
@@ -54,10 +55,27 @@ function App() {
   };
   
   
-    const [todos, dispatch] = useReducer(reducer, [
+    let [todos, dispatch] = useReducer(reducer, [
         { id: 1, text: 'demoText1', completed: false },
         { id: 2, text: 'demoText2', completed: false },
       ]);
+
+    const [filter, setFilter] = useState('all');
+
+    const filterTodos= todos.filter(todo => {
+      if (filter==='active')
+      {
+        return !todo.completed;
+      }else if (filter==='completee')
+      {
+        return todo.completed;
+      }
+      else{
+        return true;
+      }
+
+    });
+
 
   const inputRef = useRef(null);
 
@@ -95,31 +113,35 @@ const handleInputChange = async(event) => {
 };
 
 
-let content=<TodoList todos={todos} onToggle={dispatch} />;
+// let content = useMemo(() => <TodoList todos={todos} onToggle={dispatch} />, [todos, dispatch]);
+// let content=<TodoList todos={todos} onToggle={dispatch} />;
 // const [content, setContent] =useState(<TodoList todos={todos} onToggle={dispatch} />);
 
-const handleAll = () =>
-{
-  // setContent(<TodoList todos={todos} onToggle={dispatch} />);
-};
+// const handleAll = () =>
+// {
+//   // setContent(<TodoList todos={todos} onToggle={dispatch} />);
+// };
+// let all;
+// const handleActive = () => {
+// //   all=todos;
+// //   console.log(all);
+// //   let a = todos.filter(todo => !todo.completed);
+// //   console.log(a);
+// //   todos=a;
+// //  console.log({a});
 
-const handleActive = () => {
+// //  setContent(<TodoList todos={a} onToggle={dispatch} />);
+// dispatch({type:'active'});
 
- const a = todos.filter(todo => !todo.completed);
- console.log({a});
+// };
 
-//  setContent(<TodoList todos={a} onToggle={dispatch} />);
-// dispatch({type:'active'})
-
-};
-
-const handleCompleted=()=>
-{
-  const c =  todos.filter(todo => todo.completed);
-  console.log({c});
-  // setContent(<TodoList todos={c} onToggle={dispatch} />);
-//  dispatch({type:'allCompleted'})
-};
+// const handleCompleted=()=>
+// {
+//   // const c =  all.filter(todo => todo.completed);
+//   // console.log({c});
+//   // setContent(<TodoList todos={c} onToggle={dispatch} />);
+//  dispatch({type:'allCompleted'});
+// };
 
 
 
@@ -141,11 +163,11 @@ const handleCompleted=()=>
         onKeyDown={handleInputChange}
         />
       
-       {content}
+      <TodoList todos={filterTodos} onToggle={dispatch} />
      
       <div style={{alignItems:'center',display: 'flex',flexDirection: 'row',justifyContent: 'center',marginTop:'35px'
       }}>
-      <button onClick={handleAll}>All</button><button onClick={handleActive}>Active</button><button onClick={handleCompleted}>Completed</button>
+      <button onClick={()=>setFilter('all')}>All</button><button onClick={()=>setFilter('active')}>Active</button><button onClick={()=>setFilter('completee')}>Completed</button>
       </div>
       </div>
 
