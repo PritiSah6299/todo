@@ -36,3 +36,13 @@
     transform: rotate(360deg);
   }
 }
+
+.UiContent{
+  alignItems:'center';
+  display: 'flex';
+  flexDirection: 'column';
+  justifyContent: 'center';
+  height:'auto';
+  width:'800px';
+  marginLeft:'325px';
+}
